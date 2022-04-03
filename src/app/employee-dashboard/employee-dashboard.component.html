@@ -7,6 +7,7 @@
         type="button"
         data-bs-toggle="modal"
         data-bs-target="#exampleModal"
+        (click)="clickAddEmployee()"
       >
         Add Employee
       </button>
@@ -27,16 +28,25 @@
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <td>1</td>
-      <td>Shubham</td>
-      <td>Acharya</td>
-      <td>shubham@gmail.com</td>
-      <td>123789456</td>
-      <td>$ 10,000</td>
+    <tr *ngFor="let row of employeeData">
+      <td>{{ row.id }}</td>
+      <td>{{ row.firstName }}</td>
+      <td>{{ row.lastName }}</td>
+      <td>{{ row.email }}</td>
+      <td>{{ row.mobile }}</td>
+      <td>₹ {{ row.salary }}</td>
       <td>
-        <button class="btn btn-info">Edit</button>
-        <button class="btn btn-danger mx-3">Delete</button>
+        <button
+          class="btn btn-info"
+          data-bs-toggle="modal"
+          data-bs-target="#exampleModal"
+          (click)="onEdit(row)"
+        >
+          Edit
+        </button>
+        <button class="btn btn-danger mx-3" (click)="deleteEmployee(row)">
+          Delete
+        </button>
       </td>
     </tr>
   </tbody>
@@ -127,8 +137,16 @@
           type="button"
           class="btn btn-primary"
           (click)="postEmployeeDetails()"
+          *ngIf="showAdd"
         >
-          Add
+          Add</button
+        ><button
+          type="button"
+          class="btn btn-primary"
+          (click)="updateEmployeeDetails()"
+          *ngIf="showUpdate"
+        >
+          Update
         </button>
       </div>
     </div>
